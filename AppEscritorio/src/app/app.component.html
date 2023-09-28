@@ -1,0 +1,71 @@
+<div class="container py-5">
+  <!-- Sección de información de bienvenida -->
+  <div class="rounded shadow p-5 d-flex">
+    <img src="/assets/Imageninicio.svg" alt="" width="250">
+    <div>
+      <h3 class="text-primary">Bienvenido a Tareas</h3>
+      <h5 class="text-secondary">Con esta aplicación podrás gestionar tus tareas</h5>
+
+      <hr>
+
+      <p class="text-muted">
+        Realizado por Jeffer Castro
+      </p>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <!-- Sección de lista de tareas -->
+    <div class="col-md-6">
+      <h3>Mi lista de tareas</h3>
+      <div class="my-5"></div>
+      <!-- Itera sobre las tareas y las muestra como tarjetas -->
+      <div *ngFor="let tarea of tareas" class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div class="fw-bold">{{ tarea.nombre }}</div>
+            <div class="text-muted">
+              <!-- Botones para editar y eliminar tareas -->
+              <i class="fa fa-edit cursor-pointer" title="Editar tarea" (click)="edit(tarea)"></i>
+              <i class="fa fa-trash ms-2 cursor-pointer" title="Eliminar tarea" (click)="delete(tarea)"></i>
+            </div>
+          </div>
+          <div>
+            <!-- Muestra el estado de la tarea (completada o pendiente) -->
+            <small class="text success" *ngIf="tarea.completado; else noCompletado">
+              <i class="fa fa-check-circle"></i> completado
+            </small>
+            <ng-template #noCompletado>
+              <small class="text-muted">
+                <i class="fa fa-clock"></i> pendiente
+              </small>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Sección de formulario para crear o editar tareas -->
+    <div class="col-md-6">
+      <h3>{{tarea.id ? 'Editar': 'Nueva'}} Tarea</h3>
+
+      <form class="mt-5" (ngSubmit)="save()">
+        <!-- Campos de entrada para el nombre de la tarea y su estado de completado -->
+        <div class="mb-3 form-floating">
+          <input id="nombre" type="text" placeholder="Nombre" name="nombre" class="form-control" [(ngModel)]="tarea.nombre">
+          <label for="nombre">Nombre</label>
+        </div>
+
+        <div class="mb-3 form-check">
+          <input id="completado" type="checkbox" class="form-check-input" name="completado" [(ngModel)]="tarea.completado">
+          <label for="completado" class="form-check-label">Completado</label>
+        </div>
+        <!-- Botón para guardar la tarea -->
+        <div class="text-end">
+          <button class="btn btn-primary btn-lg">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
